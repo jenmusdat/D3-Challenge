@@ -96,8 +96,8 @@ d3.csv("assets/data/data.csv").then(
       .style("font-size", "15px")
       .style("color", "white");
     // Step 1: Append tooltip div
-    var toolTip = d3.select("body").append("div").classed("tooltip", true);
-
+    var toolTip = d3.select("body").append("div").attr("class", "tooltip");
+    console.log(toolTip);
     // Step 2: Create "mouseover" event listener to display tooltip
     //  circlesGroup
     //     .on("mouseover", function (d) {
@@ -125,20 +125,24 @@ d3.csv("assets/data/data.csv").then(
     //     toolTip.style("display", "none");
     //   });
     // part b: create handlers
-    function onMouseover(d, i) {
+    function onMouseover(d) {
       toolTip.style("display", "block");
+      console.log(d);
       toolTip
-        .html(`Health <strong>${d.healthcare}</strong>`)
+        .html(`<div>Health <strong>${d.healthcare}</strong></div>`)
+        .style("display", "block")
+        .style("color", "black")
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + "px");
     }
 
-    function onMouseout(d, i) {
+    function onMouseout(d) {
       toolTip.style("display", "none");
     }
 
     // part c: add event listener
-    circlesGroup.on("mouseover", onMouseover).on("mouseout", onMouseout);
+    console.log("here");
+    circlesGroup.on("mouseover", onMouseover); //.on("mouseout", onMouseout);
   },
   function (error) {
     console.log(error);
