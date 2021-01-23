@@ -78,8 +78,8 @@ d3.csv("assets/data/data.csv").then(
       .append("circle")
       .attr("cx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("cy", (d) => yLinearScale(d.poverty))
-      .attr("r", "10")
-      .attr("fill", "gold")
+      .attr("r", "20")
+      .attr("fill", "purple")
       .attr("stroke-width", "1")
       .attr("stroke", "black");
 
@@ -93,7 +93,8 @@ d3.csv("assets/data/data.csv").then(
       .attr("dx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("dy", (d) => yLinearScale(d.poverty))
       .style("text-anchor", "middle")
-      .style("font-size", "10px");
+      .style("font-size", "15px")
+      .style("color", "white");
     // Step 1: Append tooltip div
     var toolTip = d3.select("body").append("div").classed("tooltip", true);
 
@@ -127,7 +128,7 @@ d3.csv("assets/data/data.csv").then(
     function onMouseover(d, i) {
       toolTip.style("display", "block");
       toolTip
-        .html(`Pizzas eaten: <strong>${d.poverty}</strong>`)
+        .html(`Health <strong>${d.healthcare}</strong>`)
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + "px");
     }
