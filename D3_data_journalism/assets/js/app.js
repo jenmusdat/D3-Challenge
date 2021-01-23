@@ -13,7 +13,7 @@ var margin = {
 
 var height = svgHeight - margin.top - margin.bottom;
 var width = svgWidth - margin.left - margin.right;
- append svg and group
+// append svg and group
 var svg = d3
   .select(".chart")
   .append("svg")
