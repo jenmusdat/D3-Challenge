@@ -17,7 +17,7 @@ var width = svgWidth - margin.left - margin.right;
 
 // Append SVG element
 var svg = d3
-  .select(".chart")
+  .select("#scatter")
   .append("svg")
   .attr("height", svgHeight)
   .attr("width", svgWidth);
@@ -27,10 +27,20 @@ var chartGroup = svg
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+var chosenXAxis = "healthcare";
+function xScale(stateData, chosenXAxis) {
+  var xLinearScale = d3
+    .scaleLinear()
+    .domain([
+      d3.min(stateData, (d) => d[chosenXAxis]) * 0.7,
+      d3.max(stateData, (d) => d[chosenXAxis]),
+    ])
+    .range([0, width]);
+  return xLinearScale;
+}
 // Read CSV
-d3.csv("data/data.csv").then(
-  function (data) {
-
+d3.csv("assets/data/data.csv").then(
+  function (stateData) {
     // parse data
     stateData.forEach(function (data) {
       data.poverty = +data.poverty;
@@ -42,19 +52,15 @@ d3.csv("data/data.csv").then(
     });
 
     // create scales
-    var xTimeScale = d3
-      .scaleTime()
-      .domain(d3.extent(medalData, (d) => d.date))
-      .range([0, width]);
-
+    var xLinearScale = xScale(stateData, chosenXAxis);
     var yLinearScale = d3
       .scaleLinear()
-      .domain([0, d3.max(medalData, (d) => d.medals)])
+      .domain([0, d3.max(stateData, (d) => d.poverty)])
       .range([height, 0]);
 
     // create axes
-    var xAxis = d3.axisBottom(xTimeScale);
-    var yAxis = d3.axisLeft(yLinearScale).ticks(6);
+    var xAxis = d3.axisBottom(xLinearScale);
+    var yAxis = d3.axisLeft(yLinearScale);
 
     // append axes
     chartGroup
@@ -67,39 +73,71 @@ d3.csv("data/data.csv").then(
     // append circles
     var circlesGroup = chartGroup
       .selectAll("circle")
-      .data(medalData)
+      .data(stateData)
       .enter()
       .append("circle")
-      .attr("cx", (d) => xTimeScale(d.date))
-      .attr("cy", (d) => yLinearScale(d.medals))
+      .attr("cx", (d) => xLinearScale(d[chosenXAxis]))
+      .attr("cy", (d) => yLinearScale(d.poverty))
       .attr("r", "10")
       .attr("fill", "gold")
       .attr("stroke-width", "1")
       .attr("stroke", "black");
 
-    // date formatter to display dates nicely
-    var dateFormatter = d3.timeFormat("%d-%b");
-
+    var textGroup = chartGroup
+      .selectAll("text.abbr")
+      .data(stateData)
+      .enter()
+      .append("text")
+      .attr("class", "abbr")
+      .text((d) => d.abbr)
+      .attr("dx", (d) => xLinearScale(d[chosenXAxis]))
+      .attr("dy", (d) => yLinearScale(d.poverty))
+      .style("text-anchor", "middle")
+      .style("font-size", "10px");
     // Step 1: Append tooltip div
     var toolTip = d3.select("body").append("div").classed("tooltip", true);
 
     // Step 2: Create "mouseover" event listener to display tooltip
-    circlesGroup
-      .on("mouseover", function (d) {
-        toolTip
-          .style("display", "block")
-          .html(
-            `<strong>${dateFormatter(d.date)}<strong><hr>${
-              d.medals
-            } medal(s) won`
-          )
-          .style("left", d3.event.pageX + "px")
-          .style("top", d3.event.pageY + "px");
-      })
-      // Step 3: Create "mouseout" event listener to hide tooltip
-      .on("mouseout", function () {
-        toolTip.style("display", "none");
-      });
+    //  circlesGroup
+    //     .on("mouseover", function (d) {
+    //       toolTip
+    //         .style("display", "block")
+    //         .html(`<strong>Poverty</strong><hr>${d.poverty}</hr>`)
+    //         .style("left", d3.event.pageX + "px")
+    //         .style("top", d3.event.pageY + "px");
+    //     })
+    //     // Step 3: Create "mouseout" event listener to hide tooltip
+    //     .on("mouseout", function () {
+    //       toolTip.style("display", "none");
+    //     });
+    // Step 2: Create "mouseover" event listener to display tooltip
+    // circlesGroup
+    //   .on("mouseover", function (d) {
+    //     toolTip
+    //       .style("display", "block")
+    //       .html(`<hr>${d.poverty} medal(s) won`)
+    //       .style("left", d3.event.pageX + "px")
+    //       .style("top", d3.event.pageY + "px");
+    //   })
+    //   // Step 3: Create "mouseout" event listener to hide tooltip
+    //   .on("mouseout", function () {
+    //     toolTip.style("display", "none");
+    //   });
+    // part b: create handlers
+    function onMouseover(d, i) {
+      toolTip.style("display", "block");
+      toolTip
+        .html(`Pizzas eaten: <strong>${d.poverty}</strong>`)
+        .style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + "px");
+    }
+
+    function onMouseout(d, i) {
+      toolTip.style("display", "none");
+    }
+
+    // part c: add event listener
+    circlesGroup.on("mouseover", onMouseover).on("mouseout", onMouseout);
   },
   function (error) {
     console.log(error);
