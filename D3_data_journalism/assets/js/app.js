@@ -37,7 +37,7 @@ var tip = d3
 /* Invoke the tip in the context of your visualization */
 svg.call(tip);
 
-var chosenXAxis = "healthcare";
+var chosenXAxis = "poverty";
 function xScale(stateData, chosenXAxis) {
   var xLinearScale = d3
     .scaleLinear()
@@ -65,7 +65,7 @@ d3.csv("assets/data/data.csv").then(
     var xLinearScale = xScale(stateData, chosenXAxis);
     var yLinearScale = d3
       .scaleLinear()
-      .domain([0, d3.max(stateData, (d) => d.poverty)])
+      .domain([0, d3.max(stateData, (d) => d.healthcare)])
       .range([height, 0]);
 
     // create axes
@@ -87,8 +87,8 @@ d3.csv("assets/data/data.csv").then(
       .enter()
       .append("circle")
       .attr("cx", (d) => xLinearScale(d[chosenXAxis]))
-      .attr("cy", (d) => yLinearScale(d.poverty))
-      .attr("r", "20")
+      .attr("cy", (d) => yLinearScale(d.healthcare))
+      .attr("r", "15")
       .attr("fill", "purple")
       .attr("stroke-width", "1")
       .attr("stroke", "black")
@@ -103,7 +103,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("class", "abbr")
       .text((d) => d.abbr)
       .attr("dx", (d) => xLinearScale(d[chosenXAxis]))
-      .attr("dy", (d) => yLinearScale(d.poverty))
+      .attr("dy", (d) => yLinearScale(d.healthcare))
       .style("text-anchor", "middle")
       .style("font-size", "15px")
       .style("color", "white")
