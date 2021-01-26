@@ -112,16 +112,12 @@ d3.csv("assets/data/data.csv").then(
 
     chartGroup
       .append("text")
-      .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
-      .text("Poverty Rate");
-    // chartGroup
-    //   .append("text")
-    //   .attr(
-    //     "transform",
-    //     "translate(" + width / 2 + " ," + (height + margin.top + 20) + ")"
-    //   )
-    //   .style("text-anchor", "middle")
-    //   .text("Poverty Rate");
+      .attr("x", width / 2)
+      .attr("y", height + 20)
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .attr("fill", "red")
+      .text("In Poverty(%)");
 
     chartGroup
       .append("text")
@@ -131,7 +127,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .attr("fill", "red")
-      .text("Healthcare Access");
+      .text("Lacks Healthcare Access (%)");
   },
   function (error) {
     console.log(error);
