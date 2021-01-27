@@ -105,7 +105,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("dx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("dy", (d) => yLinearScale(d.healthcare))
       .style("text-anchor", "middle")
-      .style("font-size", "12px")
+      .style("font-size", "10px")
       .style("color", "white")
       .on("mouseover", tip.show)
       .on("mouseout", tip.hide);
