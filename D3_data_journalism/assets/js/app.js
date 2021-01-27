@@ -89,7 +89,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("cx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("cy", (d) => yLinearScale(d.healthcare))
       .attr("r", "12")
-      .attr("fill", "purple")
+      .attr("fill", "yellow")
       .attr("stroke-width", "1")
       .attr("stroke", "black")
       .on("mouseover", tip.show)
