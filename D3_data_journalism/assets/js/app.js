@@ -42,7 +42,7 @@ function xScale(stateData, chosenXAxis) {
   var xLinearScale = d3
     .scaleLinear()
     .domain([
-      d3.min(stateData, (d) => d[chosenXAxis]) * 0.7,
+      d3.min(stateData, (d) => d[chosenXAxis]) * 0.9,
       d3.max(stateData, (d) => d[chosenXAxis]),
     ])
     .range([0, width]);
@@ -65,7 +65,7 @@ d3.csv("assets/data/data.csv").then(
     var xLinearScale = xScale(stateData, chosenXAxis);
     var yLinearScale = d3
       .scaleLinear()
-      .domain([0, d3.max(stateData, (d) => d.healthcare)])
+      .domain([4, d3.max(stateData, (d) => d.healthcare)])
       .range([height, 0]);
 
     // create axes
@@ -88,7 +88,7 @@ d3.csv("assets/data/data.csv").then(
       .append("circle")
       .attr("cx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("cy", (d) => yLinearScale(d.healthcare))
-      .attr("r", "15")
+      .attr("r", "12")
       .attr("fill", "purple")
       .attr("stroke-width", "1")
       .attr("stroke", "black")
@@ -105,7 +105,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("dx", (d) => xLinearScale(d[chosenXAxis]))
       .attr("dy", (d) => yLinearScale(d.healthcare))
       .style("text-anchor", "middle")
-      .style("font-size", "15px")
+      .style("font-size", "12px")
       .style("color", "white")
       .on("mouseover", tip.show)
       .on("mouseout", tip.hide);
