@@ -25,5 +25,4 @@ To create this graph I did the following:
 ## Submitted by
 
 ## Jenny Kaylor
-
-## 1.19.2021
+## 1.27.2021
