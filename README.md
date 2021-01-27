@@ -3,7 +3,7 @@
 For this challenge we were asked to complete a scatter plot using data from census data. In it we were asked to compare two disctinct data sets. I chose to compare healthcare and poverty.
 This is an example of what you will see when you see the graph.
 
-![Graph](Images/Graph.JPG)
+![Graph](images/Graph.JPG)
 You can get to the webpage by clicking on this link:
 https://jenmusdat.github.io/D3-challenge/
 
