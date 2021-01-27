@@ -20,7 +20,7 @@ To create this graph I did the following:
 1. Created the text groups that would become state abbreviations to go inside the bubbles
 1. At the end of the circles group and the text group I added the tip for mouseover and mouseout functions
 1. Added the axis titles
-1. Provided some insight and observtaions regarding the data
+1. Provided some insight and observations regarding the data
 1. I finished by working on styling
 
 ## Submitted by
