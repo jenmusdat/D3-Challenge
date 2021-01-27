@@ -116,6 +116,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("y", height + 20)
       .attr("dy", "1em")
       .style("text-anchor", "middle")
+      .attr("font-size", "24px")
       .attr("fill", "red")
       .text("In Poverty(%)");
 
@@ -126,6 +127,7 @@ d3.csv("assets/data/data.csv").then(
       .attr("y", 0 - margin.left)
       .attr("dy", "1em")
       .style("text-anchor", "middle")
+      .attr("font-size", "24px")
       .attr("fill", "red")
       .text("Lacks Healthcare Access (%)");
   },
